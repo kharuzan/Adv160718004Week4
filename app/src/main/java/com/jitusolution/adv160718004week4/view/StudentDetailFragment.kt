@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jitusolution.adv160718004week4.R
+import com.jitusolution.adv160718004week4.util.loadImage
 import com.jitusolution.adv160718004week4.viewmodel.DetailViewModel
 import com.jitusolution.adv160718004week4.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_student_detail.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
+import kotlinx.android.synthetic.main.student_list_item.view.*
 
 class StudentDetailFragment : Fragment() {
     private lateinit var viewModel:DetailViewModel
@@ -27,9 +29,10 @@ class StudentDetailFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var id = StudentDetailFragmentArgs.fromBundle(requireArguments()).id
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch()
+        viewModel.fetch(id)
 
         observeViewModel()
     }
@@ -43,6 +46,7 @@ class StudentDetailFragment : Fragment() {
             txtName.setText(it.name)
             txtBod.setText(it.bod)
             txtPhone.setText(it.phone)
+            imageView2.loadImage(it.photoUrl.toString(), progressBar2)
 
         })
     }
